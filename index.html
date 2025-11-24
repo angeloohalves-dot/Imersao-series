@@ -7,23 +7,32 @@
     <title>Super Séries</title>
 </head>
 <body> 
+   <!-- Botão para abrir/fechar o menu lateral -->
+   <button id="menu-toggle-btn" aria-label="Abrir Menu">&#9776;</button>
    <header>
     <h1>Super Séries</h1>
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Digite o nome da série">
-        <button onclick="iniciarBusca()" id="botao-busca">Buscar</button>
+        <label for="search-input" class="visually-hidden">Digite o nome da série</label>
+        <input type="text" id="search-input" class="search-input" placeholder="Digite o nome da série">
+        <button onclick="iniciarBusca()" id="botao-busca" aria-label="Buscar Série">Buscar</button>
     </div>
    </header> 
 
    <main>
+     <nav class="category-menu">
+        <button id="menu-close-btn" aria-label="Fechar Menu">&times;</button>
+        <h3>Categorias</h3>
+        <ul id="category-list"></ul>
+     </nav>
      <section class="card-container">
         <!-- Os cards de séries serão inseridos aqui dinamicamente pelo script.js -->
-    </section>
+     </section>
+     <div id="pagination-container"></div>
     
    </main>
 
    <!-- Botão Voltar ao Topo -->
-   <button id="back-to-top-btn" title="Voltar ao topo">↑</button>
+   <button id="back-to-top-btn" aria-label="Voltar ao topo">↑</button>
    <!-- O footer foi movido para fora do main para melhor semântica -->
    <footer class="footer">
     <ul class="footer-links">
