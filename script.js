@@ -1,4 +1,4 @@
-let allSeries = []; // Variável global para armazenar os dados de todas as séries
+let allSeries = []; // Armazena os dados de todas as séries
 
 // Função para buscar e exibir os dados das séries
 async function fetchSeries() {
@@ -8,50 +8,101 @@ async function fetchSeries() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        allSeries = data; // Armazena os dados na variável global
-        const container = document.querySelector('.card-container');
-        container.innerHTML = ''; // Limpa o container antes de adicionar novos cards
-
-        // Agrupa as séries em conjuntos de 3
-        for (let i = 0; i < data.length; i += 3) {
-            const seriesChunk = data.slice(i, i + 3);
-            const page = document.createElement('section');
-            page.className = 'series-page';
-
-            // Adiciona o fundo com base na primeira série do grupo
-            page.innerHTML = `<div class="page-background" style="background-image: url('${seriesChunk[0].capa}')"></div>`;
-
-            const cardsWrapper = document.createElement('div');
-            cardsWrapper.className = 'cards-wrapper';
-
-            seriesChunk.forEach(serie => {
-                const article = document.createElement('article');
-                article.classList.add('card');
-                const serieId = serie.nome.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                article.id = `serie-${serieId}`;
-
-                article.innerHTML = `
-                    <div class="card-image">
-                        <img src="${serie.capa}" alt="Capa da série ${serie.nome}" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600.png?text=Capa+Indisponível';">
-                    </div>
-                    <div class="card-info">
-                        <h2><a href="${serie.link}" target="_blank">${serie.nome}</a></h2>
-                        <p><strong>Ano:</strong> ${serie.ano}</p>
-                        <p>${serie.descricao}</p>
-                    </div>
-                `;
-                cardsWrapper.appendChild(article);
-            });
-            page.appendChild(cardsWrapper);
-            container.appendChild(page);
-        }
-
-        // Após criar os artigos, inicia o observador de animação
-        setupAnimationObserver();
+        // Filtra objetos vazios que possam existir no JSON
+        allSeries = data.filter(serie => serie.nome); 
+        
+        createCategoryMenu(); // Cria o menu de categorias
+        displaySeries(allSeries); // Exibe todas as séries inicialmente
 
     } catch (error) {
         console.error("Erro ao buscar os dados das séries:", error);
     }
+}
+
+// Função para exibir as séries na tela
+function displaySeries(seriesToShow) {
+    const container = document.querySelector('.card-container');
+    container.innerHTML = ''; // Limpa o container antes de adicionar novos cards
+
+    if (seriesToShow.length === 0) {
+        container.innerHTML = '<p class="no-results">Nenhuma série encontrada para esta categoria.</p>';
+        return;
+    }
+
+    // Agrupa as séries em conjuntos de 3
+    for (let i = 0; i < seriesToShow.length; i += 3) {
+        const seriesChunk = seriesToShow.slice(i, i + 3);
+        const page = document.createElement('section');
+        page.className = 'series-page';
+
+        // Adiciona o fundo com base na primeira série do grupo
+        if (seriesChunk[0] && seriesChunk[0].capa) {
+            page.innerHTML = `<div class="page-background" style="background-image: url('${seriesChunk[0].capa}')"></div>`;
+        }
+
+        const cardsWrapper = document.createElement('div');
+        cardsWrapper.className = 'cards-wrapper';
+
+        seriesChunk.forEach(serie => {
+            const article = document.createElement('article');
+            article.classList.add('card');
+            const serieId = serie.nome.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            article.id = `serie-${serieId}`;
+
+            article.innerHTML = `
+                <div class="card-image">
+                    <img src="${serie.capa}" alt="Capa da série ${serie.nome}" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600.png?text=Capa+Indisponível';">
+                </div>
+                <div class="card-info">
+                    <h2><a href="${serie.imdb_link}" target="_blank" rel="noopener noreferrer">${serie.nome}</a></h2>
+                    <p><strong>Ano:</strong> ${serie.ano}</p>
+                    <p>${serie.descricao}</p>
+                    <a href="${serie.link}" class="saiba-mais-btn" target="_blank" rel="noopener noreferrer">Saiba Mais</a>
+                </div>
+            `;
+            cardsWrapper.appendChild(article);
+        });
+        page.appendChild(cardsWrapper);
+        container.appendChild(page);
+    }
+
+    // Após criar os artigos, inicia o observador de animação
+    setupAnimationObserver();
+}
+
+// Função para criar o menu de categorias
+function createCategoryMenu() {
+    const categoryList = document.getElementById('category-list');
+    // Usando um Set para obter tags únicas
+    const allTags = new Set(allSeries.flatMap(serie => serie.tags || []));
+    const sortedTags = [...allTags].sort(); // Ordena as tags em ordem alfabética
+
+    // Botão para mostrar todas as séries
+    const allLi = document.createElement('li');
+    allLi.innerHTML = `<button class="category-button active">Todas</button>`;
+    allLi.querySelector('button').addEventListener('click', (e) => {
+        displaySeries(allSeries);
+        document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+    });
+    categoryList.appendChild(allLi);
+
+    // Cria um botão para cada tag
+    sortedTags.forEach(tag => {
+        const listItem = document.createElement('li');
+        // Formata a tag para exibição (ex: 'ficcao_cientifica' -> 'Ficcao Cientifica')
+        const formattedTag = tag.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        listItem.innerHTML = `<button class="category-button">${formattedTag}</button>`;
+        
+        listItem.querySelector('button').addEventListener('click', (e) => {
+            const filteredSeries = allSeries.filter(serie => serie.tags && serie.tags.includes(tag));
+            displaySeries(filteredSeries);
+            // Gerencia a classe 'active' para feedback visual
+            document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+        });
+        categoryList.appendChild(listItem);
+    });
 }
 
 // Função para configurar a animação de fade-in nos artigos
@@ -142,6 +193,64 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.search-input').addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
             iniciarBusca();
+        }
+    });
+
+    // --- Lógica do Menu Lateral ---
+    const menuToggleBtn = document.getElementById('menu-toggle-btn');
+    const categoryMenu = document.querySelector('.category-menu');
+    const menuCloseBtn = document.getElementById('menu-close-btn');
+    menuToggleBtn.setAttribute('aria-expanded', 'false');
+
+    // Botão "Hamburger" agora apenas abre o menu
+    menuToggleBtn.addEventListener('click', (event) => {
+        event.stopPropagation(); // Impede que o clique se propague para o document
+        categoryMenu.classList.add('open');
+        menuToggleBtn.setAttribute('aria-expanded', 'true');
+        // Move o foco para o botão de fechar dentro do menu
+        menuCloseBtn.focus();
+    });
+
+    // Botão "X" fecha o menu
+    menuCloseBtn.addEventListener('click', () => {
+        categoryMenu.classList.remove('open');
+        menuToggleBtn.setAttribute('aria-expanded', 'false');
+        // Devolve o foco para o botão que abriu o menu
+        menuToggleBtn.focus();
+    });
+
+    // Fecha o menu se clicar fora dele
+    document.addEventListener('click', (event) => {
+        if (categoryMenu.classList.contains('open') && !categoryMenu.contains(event.target) && event.target !== menuToggleBtn) {
+            categoryMenu.classList.remove('open');
+            menuToggleBtn.setAttribute('aria-expanded', 'false');
+            // Não precisa devolver o foco aqui, pois o usuário clicou em outro lugar
+        }
+    });
+
+    // Adiciona a lógica de "trapping focus" ao menu
+    categoryMenu.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab') {
+            return; // Se não for a tecla Tab, não faz nada
+        }
+
+        // Pega todos os elementos focáveis dentro do menu
+        const focusableElements = categoryMenu.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        // Se a tecla Shift NÃO estiver pressionada (navegando para frente)
+        if (!event.shiftKey && document.activeElement === lastElement) {
+            event.preventDefault(); // Impede o comportamento padrão do Tab
+            firstElement.focus(); // Move o foco para o primeiro elemento
+        }
+
+        // Se a tecla Shift ESTIVER pressionada (navegando para trás)
+        if (event.shiftKey && document.activeElement === firstElement) {
+            event.preventDefault(); // Impede o comportamento padrão do Tab
+            lastElement.focus(); // Move o foco para o último elemento
         }
     });
 });
