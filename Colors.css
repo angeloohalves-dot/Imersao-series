@@ -1,46 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-/* Animação de zoom sutil para o fundo */
-@keyframes kenburns {
-  0% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1.15);
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap'); /* Importa a fonte Quicksand do Google Fonts */
 
 * {
-    margin: 0;
     box-sizing: border-box; /* Garante que padding e border não aumentem o tamanho total do elemento */
 }
 
 :root {
-    --primary-color: #0e0d0dec; /* Cor primária (preto) */
-    --secondary-color: #e2e6e4; /* Cor secundária (branco) */
-    --tertiary-color: #404c85; /* Cor terciária (preto médio) */
-    --bg-color: #58ace4; /* Cor de fundo (azul escuro) */
-    --accent-color: #87CEFA; /* Cor de destaque (Light Sky Blue) */
-}
-
-html {
-    /* Habilita o efeito de "snap" na rolagem para o documento inteiro */
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth; /* Rolagem suave ao usar links ou a busca */
+    --primary-color: #0e722f; /* Cor primária (azul claro) */
+    --secondary-color: #d49621; /* Cor secundária (cinza claro) */
+    --tertiary-color: #5a5c61; /* Cor terciária (cinza médio) */
+    --bg-color: #2a3b68; /* Cor de fundo (cinza escuro) */
 }
 
 body {
-    /* Adiciona uma imagem de fundo com um gradiente por cima para garantir a legibilidade do texto. */
-    /* A cor de fundo sólida (--bg-color) é mantida como fallback caso a imagem não carregue. */
-    background-color: #000; /* Fundo preto como base */
+    margin: 0; /* Remove a margem padrão do body */
+    background: var(--bg-color); /* Define a cor de fundo usando uma variável */
     color: var(--secondary-color); /* Define a cor do texto padrão usando uma variável */
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", sans-serif; /* Define a família da fonte */
 }
 
 header {
     padding: 2rem 1rem; /* Espaçamento interno (2rem em cima/baixo, 1rem nos lados) */
     display: flex; /* Habilita o layout flexbox */
-    align-items: center;
+    align-items: center; /* Alinha os itens verticalmente ao centro */
     justify-content: space-around; /* Distribui os itens com espaço ao redor */
     position: sticky; /* Mantém o cabeçalho fixo no topo ao rolar a página */
     top: 0; /* Posição do topo quando sticky */
@@ -49,21 +30,15 @@ header {
     border-bottom: 1px solid var(--bg-color); /* Adiciona uma borda inferior */
     gap: 1rem; /* Espaçamento entre os elementos flex */
 }
-/* Container para o input e o botão */
-header .search-container {
-    display: flex;
-    width: 100%;
-    max-width: 500px; /* Limita a largura máxima da busca */
-    gap: 0.5rem;
-}
 
 header h1 {
     font-size: 1.5rem; /* Tamanho da fonte */
+    margin: 0; /* Remove a margem padrão */
     font-weight: 500; /* Peso da fonte (médio) */
     white-space: nowrap; /* Impede a quebra de linha do texto */
 }
-/* O input agora é chamado por uma classe para especificidade */
-.search-input {
+
+div input {
     padding: 0.375rem 0.75rem; /* Espaçamento interno */
     border-radius: 1rem; /* Arredonda as bordas */
     border: 1px solid var(--tertiary-color); /* Define a borda */
@@ -71,19 +46,20 @@ header h1 {
     font-family: inherit; /* Herda a família da fonte do elemento pai */
     font-size: 1.5rem; /* Tamanho da fonte */
     transition: all 0.2s ease; /* Adiciona uma transição suave para todas as propriedades */
-    width: 100%; /* Ocupa o espaço disponível no container flex */
+    width: 30rem; /* Largura do input */
     color: var(--secondary-color); /* Cor do texto digitado */
+    margin-right: .5rem; /* Margem à direita */
 }
 
-.search-input::placeholder {
+div input::placeholder {
     font-size: 1.2rem; /* Tamanho da fonte do placeholder */
     font-weight: 300; /* Peso da fonte do placeholder */
     color: var(--tertiary-color); /* Cor do texto do placeholder */
 }
 
-.search-input:focus {
+div input:focus {
     outline: none; /* Remove a borda de foco padrão */
-    border-color: var(--secondary-color); /* Muda a cor da borda ao focar */
+    border-color: var(--bg-color); /* Muda a cor da borda ao focar */
     box-shadow: 0 0 0 0.1rem var(--tertiary-color); /* Adiciona uma sombra de caixa para indicar foco */
 }
 
@@ -113,289 +89,30 @@ header h1 {
 }
 
 main {
-    /* O main agora é o container de rolagem principal, não um elemento com largura fixa */
+    overflow-y: scroll; /* Adiciona uma barra de rolagem vertical se o conteúdo exceder a altura */
     max-width: 80rem; /* Largura máxima do conteúdo principal */
     margin: 0 auto; /* Centraliza o conteúdo principal horizontalmente */
-    padding: 0;
-}
-
-.card-container {
-    padding: 0; /* Removemos o padding para que as seções ocupem a tela toda */
-}
-
-.series-page {
-    height: 100vh;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    scroll-snap-align: start; /* Alinha o início de cada artigo com o topo do container */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.page-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    filter: blur(15px); /* Apenas o desfoque, o escurecimento será feito pelo gradiente */
-    transform: scale(1.1);
-    z-index: 1;
-    opacity: 0; /* Começa invisível */
-    transition: opacity 1.2s ease-in-out; /* Transição de fade */
-}
-
-.page-background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Gradiente radial para criar um efeito de vinheta, focando a atenção no centro */
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
-    z-index: 2;
-}
-
-.page-background.active-background {
-    opacity: 1; /* Torna o fundo visível */
-    /* Aplica a animação de zoom infinito e alternado */
-    animation: kenburns 20s ease-in-out infinite alternate;
-}
-
-.cards-wrapper {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    width: 100%;
-    padding: 2rem;
+    margin-top: 2rem; /* Margem no topo */
+    height: calc(100vh - 10rem - 4rem); /* Calcula a altura para preencher o espaço restante da tela */
 }
 
 article {
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5rem;
-    width: 100%;
-    max-width: 380px; /* Largura máxima de cada card */
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.5s ease-in-out;
-    border: 3px solid transparent;
+    background: none; /* Sem cor de fundo */
+    border-radius: 0; /* Sem bordas arredondadas */
+    padding: 0; /* Remove o padding */
+    padding: 0 1rem; /* Espaçamento interno nos lados */
+    margin-bottom: 1.25rem; /* Margem inferior */
+    box-shadow: none; /* Sem sombra */
+    transition: background-color 0.3s ease, border-bottom-color 0.3s ease; /* Transição suave */
+    border-bottom: 1px solid var(--bg-color); /* Borda inferior */
+    padding-bottom: 1.5rem; /* Espaçamento interno inferior */
 }
 
 article:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: scale(1.01); /* Aumenta ligeiramente o tamanho ao passar o mouse */
+    cursor: pointer; /* Muda o cursor para uma mão */
 }
 
-/* Estilo para o card destacado pela busca */
-article.highlight {
-    border-color: var(--secondary-color); /* Cor da borda de destaque */
-    transform: translateY(-10px) scale(1.02);
-}
-
-.card-image {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.card-image img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 2/3;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-}
-
-article h2 {
-    font-weight: 600;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--secondary-color);
-}
-
-.card-info h2 a {
-    color: inherit; /* Herda a cor branca do h2 */
-    text-decoration: none; /* Remove o sublinhado padrão */
-    transition: color 0.3s ease;
-}
-
-.card-info h2 a:hover {
-    color: var(--accent-color); /* Muda para a cor de destaque no hover */
-}
-
-.card-info {
-    color: var(--secondary-color);
-    flex-grow: 1; /* Faz com que o conteúdo de texto ocupe o espaço restante */
-    display: flex;
-    flex-direction: column;
-}
-
-.card-info p {
-    margin: 0.25rem 0;
-    line-height: 1.5;
-    font-size: 0.9rem;
-}
-
-.card-info a {
-    margin-top: auto; /* Empurra o link "Saiba mais" para o final do card */
-    padding-top: 1rem;
-    color: var(--secondary-color);
-    text-decoration: none;
-    font-weight: 300;
-}
-
-.card-info a:hover {
-    text-decoration: underline;
-}
-
-.footer {
-    /* O footer agora fica no fluxo normal do documento */
-    position: relative; /* Garante que o z-index funcione */
-    z-index: 15; /* Aumenta o z-index para garantir que fique acima dos fundos e outros elementos */
-    width: 100%; /* Largura total */
-    color: var(--tertiary-color); /* Cor do texto */
-    background-color: var(--bg-color); /* Cor de fundo */
-    padding: 2rem 1rem; /* Espaçamento interno */
-    margin-top: 0; /* Remove a margem superior pois não há mais conteúdo após os cards */
-    border-top: 1px solid #3c4043; /* Borda superior */
-    font-size: 0.8rem; /* Tamanho da fonte */
-}
-
-.footer-location {
-    color: #9aa0a6; /* Cor do texto */
-    margin-bottom: 10px; /* Margem inferior */
-}
-
-.footer-links {
-    list-style: none; /* Remove os marcadores da lista */
-    display: flex; /* Habilita o layout flexbox */
-    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
-    justify-content: center; /* Centraliza os itens horizontalmente */
-    gap: 15px; /* Espaçamento entre os links */
-}
-
-.footer-links a {
-    color: var(--secondary-color); /* Cor do link */
-    text-decoration: none; /* Remove o sublinhado */
-    transition: color 0.2s; /* Transição suave para a cor */
-}
-
-.footer-links a:hover {
-    color: var(--accent-color); /* Muda a cor do link ao passar o mouse (variável não definida) */
-}
-
-@media (max-width: 1200px) {
-    .cards-wrapper {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-@media (max-width: 768px) {
-    header {
-        /* A altura do header muda, então precisamos ajustar o calc() */
-        height: auto;
-    }
-
-    .search-input::placeholder {
-        font-size: 1rem;
-    }
-
-    main {
-        padding: 1rem 0.5rem;
-    }
-
-}
-
-@media (max-width: 480px) {
-    body {
-        font-size: 14px; /* Reduz o tamanho da fonte base em telas pequenas */
-    }
-
-    .search-input {
-        font-size: 1rem;
-    }
-
-    .footer-links {
-        flex-direction: column; /* Links do rodapé em coluna */
-        align-items: center;
-        gap: 1rem;
-    }
-
-    article h2 {
-        font-size: 1.4rem;
-    }
-}
-
-/* Estilos para o botão "Voltar ao Topo" */
-#back-to-top-btn {
-    position: fixed; /* Posição fixa na tela */
-    bottom: 20px;
-    right: 30px;
-    z-index: 99; /* Garante que fique acima de outros elementos */
-    border: none;
-    outline: none;
-    background-color: var(--tertiary-color);
-    color: var(--secondary-color);
-    cursor: pointer;
-    padding: 1rem;
-    border-radius: 50%; /* Deixa o botão redondo */
-    font-size: 1.2rem;
-    line-height: 1;
-    opacity: 0; /* Começa invisível */
-    visibility: hidden;
-    transition: opacity 0.4s, visibility 0.4s, background-color 0.3s;
-}
-
-#back-to-top-btn.show {
-    opacity: 1; /* Torna visível */
-    visibility: visible;
-}
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Gradiente escuro para garantir a legibilidade do texto */
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
-}
-
-.card-image {
-    flex: 1; /* Ocupa uma parte do espaço flexível */
-    max-width: 400px; /* Largura máxima para a imagem */
-}
-
-.card-image img {
-    width: 100%; /* Imagem ocupa 100% do seu container */
-    height: auto;
-    aspect-ratio: 2/3;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(12, 12, 12, 0.5);
-}
-
-.card-content {
-    position: relative;
-    z-index: 2; /* Garante que o conteúdo fique na frente do fundo */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    padding: 2rem;
-    width: 100%;
-    height: 100%;
-}
 article h2 {
     margin-top: 0; /* Remove a margem superior */
     font-weight: 600; /* Peso da fonte */
@@ -403,13 +120,7 @@ article h2 {
     border-bottom: none; /* Sem borda inferior */
     padding-bottom: 0; /* Sem espaçamento interno inferior */
     margin-bottom: 0.25rem; /* Margem inferior */
-    color: var(--secondary-color); /* Cor do texto */
-}
-
-.card-info {
-    flex: 1.5; /* Ocupa uma parte e meia do espaço flexível, dando mais espaço para o texto */
-    max-width: 600px; /* Largura máxima para o bloco de informações */
-    color: var(--secondary-color);
+    color: var(--primary-color); /* Cor do texto */
 }
 
 article p {
@@ -417,6 +128,7 @@ article p {
     line-height: 1.6; /* Altura da linha para melhor legibilidade */
     font-size: 1rem; /* Tamanho da fonte */
     margin-bottom: 0.5rem; /* Margem inferior */
+    color: var(--secondary-color); /* Cor do texto */
 }
 
 article p strong {
@@ -425,7 +137,7 @@ article p strong {
 }
 
 article a {
-    color: var(--secondary-color); /* Cor do link */
+    color: var(--primary-color); /* Cor do link */
     text-decoration: none; /* Remove o sublinhado padrão */
     font-weight: 200; /* Peso da fonte */
 }
@@ -435,12 +147,13 @@ article a:hover {
 }
 
 .footer {
-    /* O footer agora fica no fluxo normal do documento */
+    position: absolute; /* Posicionamento absoluto em relação ao elemento pai posicionado */
+    bottom: 0; /* Alinha na parte inferior */
+    left: 0; /* Alinha à esquerda */
     width: 100%; /* Largura total */
     color: var(--tertiary-color); /* Cor do texto */
     background-color: var(--bg-color); /* Cor de fundo */
-    padding: 2rem 1rem; /* Espaçamento interno */
-    margin-top: 2rem; /* Espaço acima do rodapé */
+    padding: 15px 20px; /* Espaçamento interno */
     border-top: 1px solid #3c4043; /* Borda superior */
     font-size: 0.8rem; /* Tamanho da fonte */
 }
@@ -469,81 +182,59 @@ article a:hover {
 }
 
 @media (max-width: 768px) {
-    header {
-        /* A altura do header muda, então precisamos ajustar o calc() */
-        height: auto;
+    header { /* Estilos para telas com largura máxima de 768px */
+        flex-direction: column; /* Organiza os itens do cabeçalho em coluna */
+        padding: 1rem; /* Reduz o espaçamento interno */
     }
 
-    .card-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    article {
-        flex-direction: column; /* Imagem em cima, texto embaixo */
-        text-align: center;
-    }
-    .search-input::placeholder {
-        font-size: 1rem;
+    header h1 { /* Estilos para o h1 no cabeçalho em telas menores */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 1rem; /* Adiciona margem inferior */
     }
 
-    main {
-        padding: 1rem 0.5rem;
+    div input { /* Estilos para o input em telas menores */
+        width: 90vw; /* Largura baseada na largura da viewport */
+        font-size: 1.2rem; /* Reduz o tamanho da fonte */
     }
 
+    main { /* Estilos para o main em telas menores */
+        padding: 0 1rem; /* Adiciona espaçamento lateral */
+    }
 
+    article:hover { /* Estilos para o article em telas menores */
+        transform: none; /* Remove o efeito de escala ao passar o mouse */
+    }
 }
 
 @media (max-width: 480px) {
-    body {
-        font-size: 14px; /* Reduz o tamanho da fonte base em telas pequenas */
+    header h1 { /* Estilos para o h1 em telas com largura máxima de 480px */
+        font-size: 1rem; /* Reduz ainda mais o tamanho da fonte */
+        max-width: 70%; /* Define uma largura máxima */
+        word-wrap: break-word; /* Permite a quebra de palavras longas */
     }
 
-    .card-content {
-        padding: 1rem;
-        gap: 1rem;
-    }
-    article {
-        padding: 1rem;
-        gap: 1rem;
+    div input, /* Estilos para o input e seu placeholder em telas muito pequenas */
+    div input::placeholder {
+        font-size: 1rem; /* Reduz o tamanho da fonte */
     }
 
-    .search-input {
-        font-size: 1rem;
+    article h2 { /* Estilos para o h2 do article em telas muito pequenas */
+        font-size: 1.3rem; /* Reduz o tamanho da fonte */
     }
 
-    .footer-links {
-        flex-direction: column; /* Links do rodapé em coluna */
-        align-items: center;
-        gap: 1rem;
+    div { /* Estilos para a div do cabeçalho em telas muito pequenas */
+        display: flex; /* Habilita flexbox */
+        align-items: center; /* Alinha itens ao centro */
+        justify-content: center; /* Centraliza itens */
+        flex-direction: column; /* Organiza em coluna */
+        gap: 0.5rem; /* Espaçamento entre os itens */
     }
 
-    article h2 {
-        font-size: 1.4rem;
+    .footer { /* Estilos para o rodapé em telas muito pequenas */
+        display: none; /* Oculta o rodapé */
     }
-}
 
-/* Estilos para o botão "Voltar ao Topo" */
-#back-to-top-btn {
-    position: fixed; /* Posição fixa na tela */
-    bottom: 20px;
-    right: 30px;
-    z-index: 99; /* Garante que fique acima de outros elementos */
-    border: none;
-    outline: none;
-    background-color: var(--tertiary-color);
-    color: var(--secondary-color);
-    cursor: pointer;
-    padding: 1rem;
-    border-radius: 50%; /* Deixa o botão redondo */
-    font-size: 1.2rem;
-    line-height: 1;
-    opacity: 0; /* Começa invisível */
-    visibility: hidden;
-    transition: opacity 0.4s, visibility 0.4s, background-color 0.3s;
-}
-
-#back-to-top-btn.show {
-    opacity: 1; /* Torna visível */
-    visibility: visible;
-}
+    button { /* Estilos para o botão em telas muito pequenas */
+        margin-top: 1rem; /* Adiciona margem no topo */
+    }
 }
