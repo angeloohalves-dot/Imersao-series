@@ -8,8 +8,8 @@ O principal objetivo foi praticar a estrutura semântica da web, o design respon
 ✨ Principais Recursos
 Lista Curada: Exibe uma coleção de séries selecionadas manualmente e algumas com ajuda do Gemini.
 
-Estrutura Simples: Uso de elementos HTML básicos:
-(<header>, <section>, <footer>, <ul>, <li>) para uma estrutura limpa.
+Estrutura Simples: Uso de elementos HTML básicos
+# <header>, <section>, <footer>, <ul>, <li> .
 
 Estilização Básica: Aplicação de CSS para cores, tipografia e layout (ex: Flexbox básico).
 
