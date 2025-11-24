@@ -1,5 +1,5 @@
 #SUPERSERIES
-# <header>, <section>, <footer>, <ul>, <li>
+
 Descrição do Projeto
 O projeto "Super Séries" é um site estático e simples desenvolvido com HTML e CSS (e, um toque básico de JavaScript para interatividade leve, como um botão de busca), que funciona como uma lista pessoal e curada das melhores séries de televisão, de acordo com a minha visão.
 
@@ -12,4 +12,4 @@ Estrutura Simples: Uso de elementos HTML básicos
 
 Estilização Básica: Aplicação de CSS para cores, tipografia e layout (ex: Flexbox básico).
 
-# <header>, <section>, <footer>, <ul>, <li>
+
