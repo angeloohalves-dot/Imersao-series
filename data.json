@@ -109,7 +109,7 @@
     "nome": "Arcane",
     "descricao": "Ambientada no universo de League of Legends, esta série animada explora as origens de dois campeões icônicos.",
     "ano": "2021",
-    "link": "https://www.netflix.com/title/81435056",
+    "link": "https://www.arcane.com/pt-br/",
     "imdb_link": "https://www.imdb.com/title/tt11126994/",
     "capa": "https://i.pinimg.com/1200x/8e/8a/9a/8e8a9a5d8f6cbdc49d889c0720ae680c.jpg",
     "tags": [
@@ -123,7 +123,7 @@
     "nome": "Ruptura (Severance)",
     "descricao": "Funcionários têm suas memórias cirurgicamente divididas entre sua vida profissional e pessoal em uma misteriosa corporação.",
     "ano": "2022",
-    "link": "https://tv.apple.com/us/show/severance",
+    "link": "https://tv.apple.com/br/show/ruptura/umc.cmc.1srk2goyh2q2zdxcx605w8vtx",
     "imdb_link": "https://www.imdb.com/title/tt11280740/",
     "capa": "https://i.pinimg.com/736x/47/06/37/470637848337d0b8a5d3d47c60d0d607.jpg",
     "tags": [
@@ -249,7 +249,7 @@
     "nome": "Squid Game",
     "descricao": "Centenas de pessoas endividadas aceitam um convite para competir em jogos infantis mortais por um prêmio em dinheiro.",
     "ano": "2021",
-    "link": "https://www.netflix.com/title/81044790",
+    "link": "https://www.netflix.com/br/title/80021955",
     "imdb_link": "https://www.imdb.com/title/tt10919420/",
     "capa": "https://i.pinimg.com/736x/23/cc/bf/23ccbf28137082dc795cf308f74f5ec0.jpg",
     "tags": [
@@ -291,7 +291,7 @@
     "nome": "Better Call Saul",
     "descricao": "O spin-off de Breaking Bad que acompanha a transformação de Jimmy McGill no inescrupuloso advogado Saul Goodman.",
     "ano": "2015",
-    "link": "https://www.amc.com/shows/better-call-saul",
+    "link": "https://www.netflix.com/br/title/80021955",
     "imdb_link": "https://www.imdb.com/title/tt3032476/",
     "capa": "https://i.pinimg.com/736x/4e/39/a1/4e39a1f72be3c9a68493097a73e69bb2.jpg",
     "tags": [
@@ -305,7 +305,7 @@
     "nome": "Ted Lasso",
     "descricao": "Um ingênuo técnico de futebol americano é contratado para treinar um time de futebol (soccer) inglês, apesar de sua inexperiência.",
     "ano": "2020",
-    "link": "https://tv.apple.com/us/show/ted-lasso",
+    "link": "https://tv.apple.com/br/show/ted-lasso/umc.cmc.vtoh0mn0xn7t3c643xqonfzy",
     "imdb_link": "https://www.imdb.com/title/tt10986410/",
     "capa": "https://i.pinimg.com/1200x/e4/f6/da/e4f6da1cb88858f69f21c2a59e586644.jpg",
     "tags": [
@@ -333,7 +333,7 @@
     "nome": "Only Murders in the Building",
     "descricao": "Três vizinhos obcecados por crimes reais se unem para investigar um assassinato em seu condomínio de luxo em Nova York.",
     "ano": "2021",
-    "link": "https://www.hulu.com/series/only-murders-in-the-building",
+    "link": "https://www.disneyplus.com/pt-br/browse/entity-ef31c7e1-cd0f-4e07-848d-1cbfedb50ddf",
     "imdb_link": "https://www.imdb.com/title/tt12851524/",
     "capa": "https://i.pinimg.com/1200x/e7/56/6a/e7566a9969c1793a38042121489561a3.jpg",
     "tags": [
@@ -347,7 +347,7 @@
     "nome": "Loki",
     "descricao": "Depois de roubar o Tesseract, uma variante de Loki é pega pela TVA e forçada a ajudar a consertar a linha do tempo quebrada.",
     "ano": "2021",
-    "link": "https://www.disneyplus.com/series/loki",
+    "link": "https://www.disney.com.br/disneyplus/loki",
     "imdb_link": "https://www.imdb.com/title/tt9140554/",
     "capa": "https://i.pinimg.com/736x/65/a6/4a/65a64a361b97200e3f5c71d54b5d516a.jpg",
     "tags": [
@@ -374,3 +374,4 @@
   {
   }
 ]
+
